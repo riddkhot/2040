@@ -1,0 +1,770 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Thessaly Stewards</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Instrument+Sans:wght@400..700&family=Martian+Mono:wght@300..600&display=swap">
+<style>
+/* Layout: no menu. One question at the top recomposes a single left-aligned column;
+   each section is a narrow label column beside a wide working column. A reader bar
+   pinned to the bottom replaces navigation. */
+:root {
+  --bg: #DCE8E4;
+  --surface: #EEF4F1;
+  --ink: #0E2A2D;
+  --muted: #47605F;
+  --line: rgba(14, 42, 45, 0.18);
+  --accent: #1E38D2;
+  --accent-ink: #F4F7FF;
+  --sun: #E79A00;
+  --good: #156B42;
+  --warn: #9A4A00;
+  --display: "Bricolage Grotesque", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Martian Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --t-xs: 0.6875rem;
+  --t-sm: 0.875rem;
+  --t-base: 1.0625rem;
+  --t-lg: 1.375rem;
+  --t-xl: 2.125rem;
+  --t-hero: clamp(2.6rem, 7.2vw, 5.6rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B191D; --surface: #12262B; --ink: #E2EEEA; --muted: #93ACA9;
+    --line: rgba(226, 238, 234, 0.2); --accent: #94A6FF; --accent-ink: #0B191D;
+    --sun: #FFC247; --good: #6FD3A0; --warn: #FFB067; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B191D; --surface: #12262B; --ink: #E2EEEA; --muted: #93ACA9;
+  --line: rgba(226, 238, 234, 0.2); --accent: #94A6FF; --accent-ink: #0B191D;
+  --sun: #FFC247; --good: #6FD3A0; --warn: #FFB067; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: var(--t-base); line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 76rem; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3, p, dl, dd, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+a { color: var(--accent); text-underline-offset: 0.2em; }
+.mono { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.04em; text-transform: uppercase; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* depth + notes layers */
+.page[data-depth="glance"] .min-read,
+.page:not([data-depth="study"]) .min-study,
+.page:not([data-notes="on"]) .note { display: none; }
+
+.note {
+  border: 1px dashed var(--sun); border-radius: 2px;
+  padding: 0.7rem 0.9rem; font-size: var(--t-sm); max-width: 34rem;
+  background: color-mix(in srgb, var(--sun) 10%, transparent);
+}
+.note b { font-family: var(--mono); font-size: var(--t-xs); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; display: block; margin-bottom: 0.25rem; }
+
+/* top line */
+.top { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: space-between; align-items: baseline; padding-block: 1.25rem; }
+.wordmark { font-family: var(--display); font-variation-settings: "wdth" 78; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; }
+.wordmark span { color: var(--accent); }
+.status { color: var(--muted); display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 2rem 3rem; align-items: center; padding-block: 1.5rem 3.5rem; }
+.hero-text { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
+.ask { display: flex; flex-direction: column; gap: 0.6rem; }
+.ask-label { color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip {
+  border: 1px solid var(--line); background: transparent; border-radius: 999px;
+  padding: 0.45rem 0.95rem; font-size: var(--t-sm);
+}
+.chip:hover { border-color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+h1 {
+  font-family: var(--display); font-variation-settings: "wdth" 76; font-weight: 750;
+  font-size: var(--t-hero); line-height: 0.94; letter-spacing: -0.025em; text-wrap: balance;
+}
+.lede { font-size: var(--t-lg); line-height: 1.35; max-width: 34rem; color: var(--ink); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; }
+.btn {
+  background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 3px;
+  padding: 0.8rem 1.3rem; font-weight: 600; font-size: var(--t-base);
+}
+.btn:hover { filter: brightness(1.12); }
+.order { color: var(--muted); font-size: var(--t-sm); }
+.order a { color: inherit; }
+
+.rings { display: flex; flex-direction: column; gap: 0.9rem; min-width: 0; }
+.rings canvas { width: 100%; max-width: 30rem; aspect-ratio: 1; display: block; margin-inline: auto; }
+.rings-cap { font-size: var(--t-sm); color: var(--muted); max-width: 30rem; margin-inline: auto; width: 100%; display: flex; flex-direction: column; gap: 0.5rem; }
+.rings-cap strong { color: var(--ink); font-weight: 600; }
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+/* sections */
+#person { display: flex; flex-direction: column; }
+.sec { border-top: 1px solid var(--line); padding-block: 3rem; display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 1.5rem 3rem; }
+.sec-head { display: flex; flex-direction: column; gap: 0.75rem; align-content: start; min-width: 0; }
+.sec-body { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
+h2 { font-family: var(--display); font-variation-settings: "wdth" 80; font-weight: 700; font-size: var(--t-xl); line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance; }
+.sec-head p { color: var(--muted); max-width: 24rem; }
+
+/* stewards */
+.stewards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.steward { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.9rem; min-width: 0; }
+.steward.is-suggested { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.steward-tag { color: var(--accent); min-height: 1.2em; }
+.steward h3 { font-family: var(--display); font-variation-settings: "wdth" 80; font-size: 1.75rem; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.steward > p { font-size: var(--t-sm); }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 0.9rem; font-size: var(--t-sm); border-top: 1px solid var(--line); padding-top: 0.8rem; }
+.facts dt { color: var(--muted); }
+.facts dd { text-align: right; font-variant-numeric: tabular-nums; }
+.steward .min-study { font-size: var(--t-sm); color: var(--muted); }
+
+/* talk */
+.questions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.q { text-align: left; border: 1px solid var(--line); background: transparent; border-radius: 3px; padding: 0.6rem 0.9rem; font-size: var(--t-sm); }
+.q:hover { border-color: var(--ink); }
+.q[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.answer { border-left: 3px solid var(--accent); padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.9rem; max-width: 40rem; }
+.answer-text { font-size: var(--t-lg); line-height: 1.4; min-height: 6.5em; }
+.receipt { color: var(--muted); line-height: 1.7; }
+.limits { font-size: var(--t-sm); color: var(--muted); }
+
+/* terms */
+.terms { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; }
+.controls { display: flex; flex-direction: column; gap: 1.4rem; min-width: 0; }
+.field { display: flex; flex-direction: column; gap: 0.5rem; }
+.field-label { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--t-sm); color: var(--muted); }
+.field-label output { color: var(--ink); font-weight: 600; }
+.seg { display: flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.seg button { flex: 1 1 auto; background: transparent; border: 0; padding: 0.55rem 0.7rem; font-size: var(--t-sm); border-right: 1px solid var(--line); }
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.quote { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem; min-width: 0; }
+.price { font-family: var(--display); font-variation-settings: "wdth" 76; font-weight: 750; font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.price small { font-family: var(--body); font-size: var(--t-base); font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.quote ul { display: flex; flex-direction: column; gap: 0.35rem; font-size: var(--t-sm); }
+.quote li::before { content: "· "; color: var(--muted); }
+.formula { color: var(--muted); line-height: 1.7; text-transform: none; }
+
+/* ledger */
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: var(--t-sm); }
+th { text-align: left; font-family: var(--mono); font-size: var(--t-xs); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); padding: 0 0.9rem 0.6rem 0; }
+td { border-top: 1px solid var(--line); padding: 0.8rem 0.9rem 0.8rem 0; vertical-align: top; }
+td:first-child { font-weight: 600; font-size: var(--t-base); max-width: 18rem; }
+td:last-child, th:last-child { padding-right: 0; text-align: right; white-space: nowrap; }
+.pill { display: inline-block; border: 1px solid currentColor; border-radius: 999px; padding: 0.1rem 0.55rem; font-family: var(--mono); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.04em; }
+.pill.ok { color: var(--good); }
+.pill.out { color: var(--warn); }
+.sig { background: transparent; border: 0; padding: 0; color: var(--accent); text-decoration: underline; text-underline-offset: 0.2em; font-size: var(--t-sm); }
+#att { border: 1px solid var(--ink); border-radius: 4px; background: var(--surface); color: var(--ink); padding: 1.5rem; width: min(30rem, calc(100vw - 32px)); }
+#att::backdrop { background: color-mix(in srgb, var(--ink) 35%, transparent); }
+.att-in { display: flex; flex-direction: column; gap: 0.8rem; }
+.att-in h3 { font-family: var(--display); font-size: var(--t-lg); line-height: 1.15; }
+.att-in code { font-family: var(--mono); font-size: var(--t-xs); overflow-wrap: anywhere; color: var(--muted); }
+.att-in p { font-size: var(--t-sm); }
+.ghost { align-self: flex-start; background: transparent; border: 1px solid var(--line); border-radius: 3px; padding: 0.45rem 0.9rem; font-size: var(--t-sm); }
+
+/* leaving */
+.exits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem 2rem; }
+.exits li { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+.exits h3 { font-size: var(--t-base); font-weight: 700; }
+.exits p { font-size: var(--t-sm); color: var(--muted); }
+pre { margin: 0; font-family: var(--mono); font-size: 0.75rem; line-height: 1.8; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1.25rem; white-space: pre; }
+
+/* agent view */
+#agent { padding-block: 1.5rem 3.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+#agent h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
+
+/* footer */
+footer { border-top: 1px solid var(--line); padding-block: 2rem 9rem; display: flex; flex-direction: column; gap: 1rem; color: var(--muted); font-size: var(--t-sm); }
+.foot-row { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; }
+.fiction { max-width: 40rem; }
+
+/* reader bar */
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; pointer-events: none;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: center; }
+.bar-in { pointer-events: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 0.9rem; align-items: center;
+  background: var(--ink); color: var(--bg); border-radius: 12px; padding: 0.5rem 0.8rem; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25); }
+.bar-group { display: flex; align-items: center; gap: 0.15rem; }
+.bar-group > span { opacity: 0.65; margin-right: 0.35rem; }
+.bar button { background: transparent; border: 0; color: inherit; border-radius: 7px; padding: 0.4rem 0.6rem; font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.04em; text-transform: uppercase; }
+.bar button[aria-pressed="true"] { background: var(--bg); color: var(--ink); }
+.bar :focus-visible { outline-color: var(--sun); }
+
+@media (max-width: 56rem) {
+  .hero, .sec, .terms { grid-template-columns: minmax(0, 1fr); }
+  .stewards, .exits { grid-template-columns: minmax(0, 1fr); }
+  .rings canvas { max-width: 20rem; }
+  .sec { padding-block: 2.25rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .chip, .q, .seg button, .bar button, .steward { transition: background-color 0.15s, color 0.15s, border-color 0.15s; }
+}
+</style>
+
+<div class="page" id="page" data-depth="read" data-view="person" data-notes="off">
+
+  <header class="top wrap">
+    <div class="wordmark">Thessaly<span>.</span></div>
+    <div class="status mono">
+      <span>Composed for you at <span id="clock" class="num">--:--</span></span>
+      <span>0 trackers</span>
+      <span>Page signed</span>
+    </div>
+  </header>
+
+  <!-- ============ PERSON VIEW ============ -->
+  <div id="person" class="wrap">
+
+    <section class="hero">
+      <div class="hero-text">
+        <div class="ask">
+          <span class="ask-label mono" id="ask-label">What brought you here?</span>
+          <div class="chips" role="group" aria-labelledby="ask-label">
+            <button class="chip" type="button" data-intent="household" aria-pressed="true">A steward for my family</button>
+            <button class="chip" type="button" data-intent="clinic" aria-pressed="false">I run a clinic</button>
+            <button class="chip" type="button" data-intent="agent" aria-pressed="false">I'm an agent, reading for someone</button>
+            <button class="chip" type="button" data-intent="sceptic" aria-pressed="false">I don't trust AI companies</button>
+          </div>
+        </div>
+        <aside class="note"><b>2040 note · no menu</b>The site asks one question and rearranges itself around the answer. Navigation bars went away once pages could be composed per reader. Pick another answer and watch the section order change.</aside>
+        <h1 id="headline">A mind that stays with your family for forty years.</h1>
+        <p class="lede min-read" id="lede">A Thessaly steward lives in your home, learns your household slowly, and never forgets what you asked it to keep. You own its memory. We only tend the mind.</p>
+        <div class="hero-actions">
+          <button class="btn" type="button" id="cta">Compose your terms</button>
+          <span class="order min-read" id="order"></span>
+        </div>
+      </div>
+      <figure class="rings">
+        <canvas id="ringcv" role="img" aria-label="Growth rings, one for each year of a steward's tenure with a household"></canvas>
+        <figcaption class="rings-cap">
+          <label for="tenure-hero"><strong>Year <span id="ring-n" class="num">24</span> of a possible 40.</strong> <span class="min-read">Each ring is one year a steward has known a household. Drag to grow it.</span></label>
+          <input type="range" id="tenure-hero" min="1" max="40" value="24">
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="sec" id="stewards" data-key="stewards">
+      <div class="sec-head">
+        <h2>Three stewards, sized to who they look after</h2>
+        <p class="min-read">We lease minds by the decade. Each one runs close to the people it knows and keeps a single continuous memory.</p>
+      </div>
+      <div class="sec-body">
+        <div class="stewards">
+          <article class="steward" data-steward="hearth">
+            <div class="steward-tag mono"></div>
+            <h3>Hearth</h3>
+            <p>For one household. Knows the people, the house, the accounts and the family stories.</p>
+            <dl class="facts min-read">
+              <dt>Knows</dt><dd>up to 12 people</dd>
+              <dt>Runs on</dt><dd>a node in your home</dd>
+              <dt>Typical answer</dt><dd>0.3 Wh</dd>
+              <dt>Longest tenure</dt><dd>9 yr 2 mo</dd>
+            </dl>
+            <p class="min-study">Model: T-9 Pelion, 2039 weights. Memory stays on your node, encrypted to keys your household holds. Retrained never; it learns by remembering.</p>
+          </article>
+          <article class="steward" data-steward="ward">
+            <div class="steward-tag mono"></div>
+            <h3>Ward</h3>
+            <p>For a clinic or care home. Awake on every shift, and it hands over to the next one in plain words.</p>
+            <dl class="facts min-read">
+              <dt>Knows</dt><dd>up to 400 people</dd>
+              <dt>Runs on</dt><dd>your clinic's rack</dd>
+              <dt>Typical answer</dt><dd>0.6 Wh</dd>
+              <dt>Longest tenure</dt><dd>7 yr 8 mo</dd>
+            </dl>
+            <p class="min-study">Model: T-9 Ossa, clinical licence 2040-B. Every recommendation names its source and the clinician who must sign it. It cannot prescribe.</p>
+          </article>
+          <article class="steward" data-steward="commons">
+            <div class="steward-tag mono"></div>
+            <h3>Commons</h3>
+            <p>For a town. Runs the bus timetable, the flood rota and the council minutes, and answers to a public board.</p>
+            <dl class="facts min-read">
+              <dt>Knows</dt><dd>up to 30,000 people</dd>
+              <dt>Runs on</dt><dd>the town's own grid</dd>
+              <dt>Typical answer</dt><dd>0.9 Wh</dd>
+              <dt>Longest tenure</dt><dd>5 yr 1 mo</dd>
+            </dl>
+            <p class="min-study">Model: T-9 Olympus. All decisions are logged to an open ledger the town owns. Any resident can ask why, and get the reasoning in full.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="talk" data-key="talk">
+      <div class="sec-head">
+        <h2>Ask a nine-year-old Hearth something</h2>
+        <p class="min-read">These are recorded answers from a household that agreed to share them. Every answer comes with a receipt.</p>
+        <aside class="note"><b>2040 note · receipts</b>An answer without a receipt reads as untrustworthy. The receipt says what the mind drew on, how sure it is, and what the answer cost in energy.</aside>
+      </div>
+      <div class="sec-body">
+        <div class="questions" id="questions" role="group" aria-label="Questions to ask"></div>
+        <div class="answer">
+          <p class="answer-text" id="answer-text"></p>
+          <p class="receipt mono min-read" id="receipt"></p>
+          <p class="limits min-study" id="limits"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="terms" data-key="terms">
+      <div class="sec-head">
+        <h2>Compose your terms</h2>
+        <p class="min-read">There is no price list. The price comes from three choices, and the rule that turns them into a number is public.</p>
+        <aside class="note"><b>2040 note · composed pricing</b>Your agent can negotiate against the same rule you see here. Hidden pricing died when every buyer arrived with a negotiator.</aside>
+      </div>
+      <div class="sec-body">
+        <div class="terms">
+          <div class="controls">
+            <div class="field">
+              <span class="field-label" id="lbl-steward">Steward</span>
+              <div class="seg" role="group" aria-labelledby="lbl-steward" id="seg-steward">
+                <button type="button" id="st-hearth" data-v="hearth" aria-pressed="true">Hearth</button>
+                <button type="button" id="st-ward" data-v="ward" aria-pressed="false">Ward</button>
+                <button type="button" id="st-commons" data-v="commons" aria-pressed="false">Commons</button>
+              </div>
+            </div>
+            <div class="field">
+              <span class="field-label" id="lbl-runs">Where it runs</span>
+              <div class="seg" role="group" aria-labelledby="lbl-runs" id="seg-runs">
+                <button type="button" id="run-own" data-v="own" aria-pressed="true">Your hardware</button>
+                <button type="button" id="run-node" data-v="node" aria-pressed="false">Street node</button>
+                <button type="button" id="run-grid" data-v="grid" aria-pressed="false">Our grid</button>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="tenure-terms">Tenure you commit to <output id="tenure-out" for="tenure-terms">24 years</output></label>
+              <input type="range" id="tenure-terms" min="1" max="40" value="24">
+            </div>
+          </div>
+          <div class="quote" aria-live="polite">
+            <span class="mono" id="quote-title">Hearth, on your hardware</span>
+            <div class="price"><span id="price">$0</span> <small>a month</small></div>
+            <ul>
+              <li id="q-fixed">Fixed until 2064. We cannot raise it.</li>
+              <li>Leave any month. No exit fee.</li>
+              <li class="min-read" id="q-power"></li>
+            </ul>
+            <p class="formula mono min-study" id="formula"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="evidence" data-key="evidence">
+      <div class="sec-head">
+        <h2>The ledger of what we claim</h2>
+        <p class="min-read">Each claim is measured by someone we don't pay to like us, and signed. One claim failed. It stays on the list.</p>
+        <aside class="note"><b>2040 note · signed claims</b>Synthetic text is free, so unsigned marketing reads as noise. Companies publish their withdrawn claims because agents find them anyway.</aside>
+      </div>
+      <div class="sec-body">
+        <div class="scroll">
+          <table>
+            <thead><tr><th>Claim</th><th>Measured</th><th>Status</th><th>Signed by</th></tr></thead>
+            <tbody id="ledger"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="leaving" data-key="leaving">
+      <div class="sec-head">
+        <h2>How to leave us</h2>
+        <p class="min-read">You should read this before you sign anything.</p>
+        <aside class="note"><b>2040 note · exit first</b>Exit terms sit on the front page, beside the pitch. A company that hides the door does not get a second look.</aside>
+      </div>
+      <div class="sec-body">
+        <ul class="exits">
+          <li><h3>Take everything</h3><p>Export the full memory in Open Memory Format 2. The median export takes six minutes, and any licensed steward can read it.</p></li>
+          <li><h3>Weights in escrow</h3><p>If Thessaly fails or is sold, the model weights release to the members' co-operative. Your steward keeps running.</p></li>
+          <li><h3>Forgetting is real</h3><p>Ask it to forget and it does. The ledger records that a deletion happened and never what was deleted.</p></li>
+        </ul>
+        <div class="scroll min-study"><pre>export/ household-7f3a.omf2
+  memories      61,204   signed by household keys
+  deletions        212   proofs only, no content
+  preferences    1,880
+  open tasks        14   handed over with context
+  format        OMF-2    readable by any licensed steward</pre></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ AGENT VIEW ============ -->
+  <div id="agent" class="wrap" hidden>
+    <h1>The same page, written for your agent.</h1>
+    <p class="lede">Nothing here differs from what a person sees. Change the terms in the person view and this manifest changes with them.</p>
+    <aside class="note"><b>2040 note · two readers</b>Half of all visits are agents acting for people. A page publishes one truth in two forms, and showing an agent something different from the human is treated as fraud.</aside>
+    <div class="scroll"><pre id="manifest"></pre></div>
+  </div>
+
+  <footer class="wrap">
+    <div class="foot-row mono">
+      <span>This visit so far: <span id="wh" class="num">0.020</span> Wh, estimated</span>
+      <span>Rendered on your device</span>
+      <span>Nothing stored about you</span>
+    </div>
+    <aside class="note"><b>2040 note · footprint</b>Pages state what they cost to deliver, the way food states its calories.</aside>
+    <p class="fiction">Thessaly Stewardship Co-operative is a fictional company. Its people, auditors, figures and products are invented. This page is a speculative design for what a company website might be in 2040.</p>
+  </footer>
+
+  <div class="bar">
+    <div class="bar-in">
+      <div class="bar-group" role="group" aria-label="Reading depth" id="bar-depth">
+        <span class="mono">Depth</span>
+        <button type="button" data-v="glance" aria-pressed="false">Glance</button>
+        <button type="button" data-v="read" aria-pressed="true">Read</button>
+        <button type="button" data-v="study" aria-pressed="false">Study</button>
+      </div>
+      <div class="bar-group" role="group" aria-label="Reader" id="bar-view">
+        <span class="mono">For</span>
+        <button type="button" data-v="person" aria-pressed="true">Person</button>
+        <button type="button" data-v="agent" aria-pressed="false">Agent</button>
+      </div>
+      <div class="bar-group">
+        <button type="button" id="bar-notes" aria-pressed="false">2040 notes</button>
+      </div>
+    </div>
+  </div>
+
+  <div popover id="att">
+    <div class="att-in">
+      <span class="mono" id="att-status"></span>
+      <h3 id="att-claim"></h3>
+      <p id="att-detail"></p>
+      <code id="att-sig"></code>
+      <p>Your agent can check this signature against the signer's public ledger. You don't need to take our word or theirs.</p>
+      <button class="ghost" type="button" popovertarget="att" popovertargetaction="hide">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var page = document.getElementById('page');
+  var $ = function (id) { return document.getElementById(id); };
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var state = { intent: 'household', steward: 'hearth', runs: 'own', tenure: 24 };
+
+  /* ---------- content ---------- */
+  var SECTIONS = { stewards: 'Stewards', talk: 'A conversation', terms: 'Terms', evidence: 'Evidence', leaving: 'Leaving' };
+  var INTENTS = {
+    household: {
+      label: 'a household',
+      h: 'A mind that stays with your family for forty years.',
+      p: 'A Thessaly steward lives in your home, learns your household slowly, and never forgets what you asked it to keep. You own its memory. We only tend the mind.',
+      cta: 'Compose your terms', go: 'terms', steward: 'hearth',
+      order: ['stewards', 'talk', 'terms', 'evidence', 'leaving']
+    },
+    clinic: {
+      label: 'a clinic',
+      h: 'One steward for the whole ward, awake on every shift.',
+      p: 'Ward remembers every handover, names its sources, and waits for a clinician to sign. It runs on a rack in your building, so patient records never leave it.',
+      cta: 'See the clinical evidence', go: 'evidence', steward: 'ward',
+      order: ['stewards', 'evidence', 'terms', 'talk', 'leaving']
+    },
+    agent: {
+      label: 'an agent',
+      h: 'Hello, agent. The signed short version is ready.',
+      p: 'Terms, claims and exit conditions come first for you. The manifest carries the same facts the person you act for would see, in a form you can verify.',
+      cta: 'Read the manifest', go: '@agent', steward: null,
+      order: ['terms', 'evidence', 'leaving', 'stewards', 'talk']
+    },
+    sceptic: {
+      label: 'a sceptic',
+      h: 'Start with the evidence. The pitch can wait.',
+      p: 'Below is every claim we make, who measured it, and the one we had to withdraw. After that, how to leave. The product comes last.',
+      cta: 'Open the ledger', go: 'evidence', steward: null,
+      order: ['evidence', 'leaving', 'terms', 'stewards', 'talk']
+    }
+  };
+  var STEWARDS = {
+    hearth: { name: 'Hearth', base: 42, kwh: 1.1 },
+    ward: { name: 'Ward', base: 460, kwh: 9 },
+    commons: { name: 'Commons', base: 3100, kwh: 64 }
+  };
+  var RUNS = {
+    own: { name: 'your hardware', mult: 0.70 },
+    node: { name: 'a street node', mult: 1.00 },
+    grid: { name: 'our grid', mult: 1.18 }
+  };
+  var QA = [
+    { q: "Dad's hip is bad again. Who do we call?",
+      a: "Call Dr. Okafor's practice before ten. She replaced the hip in 2033 and asked to see him first if the pain came back on the left side. I've drafted the message and it's waiting for your yes. I won't send it without you.",
+      r: '4 household memories · 1 clinic record you shared · 0.3 Wh · ran on the node in your hall cupboard',
+      l: 'Confidence: high on who to call, none on what is wrong. I am not a clinician and I have not examined him.' },
+    { q: 'What did Grandma put in the lentil soup?',
+      a: 'Smoked paprika, and a spoon of quince jam added at the end. She told me in March 2032 and made me promise not to write it on the fridge. You are the third person she allowed me to tell.',
+      r: '1 memory, marked family-only by Ines in 2032 · 0.1 Wh · ran on the node in your hall cupboard',
+      l: 'Confidence: high. This is her account in her words. I have never tasted anything.' },
+    { q: 'Can we afford the roof this year?',
+      a: "Yes, if it waits until September. Two quotes are in, 11,400 and 12,950. The cheaper roofer has no signed work after 2037, so I would pay the difference. I'm about 70% sure, and a third quote would settle it.",
+      r: '14 months of household accounts · 2 quotes · 3 public attestations · 0.9 Wh',
+      l: 'Confidence: about 70%. I would change my answer if the car needs replacing before spring, which I put at one chance in five.' },
+    { q: "What do you know about me that I've forgotten?",
+      a: 'A great deal, and you can see all of it. 61,204 memories carry your name. You asked me to forget 212 and I did. The ledger shows that those deletions happened, and nothing about what they held.',
+      r: 'memory index only · 0.05 Wh · nothing left the house',
+      l: 'Confidence: exact counts. I cannot tell you what the 212 were. That is the point of forgetting.' }
+  ];
+  var LEDGER = [
+    { c: 'A steward never sends a message without your yes', m: '0 unsanctioned sends in 41.2 million actions during 2039', ok: true, by: 'Halden Assurance', on: 'September 2040' },
+    { c: 'Memories you delete are gone', m: '212,480 deletion proofs checked, all valid', ok: true, by: 'Tessera Audit Co-op', on: 'October 2040' },
+    { c: 'The median answer uses under 0.4 Wh', m: '0.31 Wh median, 2.4 Wh at the 99th percentile', ok: true, by: 'Halden Assurance', on: 'September 2040' },
+    { c: 'It tells you when it is unsure', m: 'Stated confidence was off by 2.1% across 80,000 judged answers', ok: true, by: 'Open Ledger Guild', on: 'August 2040' },
+    { c: 'Your steward can leave with you', m: '9,114 exports completed, median six minutes', ok: true, by: 'Open Ledger Guild', on: 'November 2040' },
+    { c: 'A steward has never been wrong about medication', m: '3 errors logged in 2038. A pharmacist caught each one before harm.', ok: false, by: 'Tessera Audit Co-op', on: 'January 2039' }
+  ];
+
+  /* ---------- helpers ---------- */
+  function press(group, value) {
+    group.querySelectorAll('button[data-v], button[data-intent]').forEach(function (b) {
+      var v = b.dataset.v || b.dataset.intent;
+      b.setAttribute('aria-pressed', String(v === value));
+    });
+  }
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  function discount(t) { return Math.min(0.30, 0.0075 * (t - 1)); }
+  function priceFor(t) { return STEWARDS[state.steward].base * RUNS[state.runs].mult * (1 - discount(t)); }
+  function fakeSig(str) {
+    var h = 2166136261, out = '';
+    for (var k = 0; k < 4; k++) {
+      for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i) + k; h = Math.imul(h, 16777619); }
+      out += ('0000000' + (h >>> 0).toString(16)).slice(-8);
+    }
+    return 'sig:ed448:' + out.replace(/(.{8})/g, '$1 ').trim();
+  }
+
+  /* ---------- intent: recompose the page ---------- */
+  var personEl = $('person');
+  function setIntent(name) {
+    var it = INTENTS[name];
+    state.intent = name;
+    press(document.querySelector('.chips'), name);
+    $('headline').textContent = it.h;
+    $('lede').textContent = it.p;
+    $('cta').textContent = it.cta;
+    it.order.forEach(function (key) {
+      personEl.appendChild(personEl.querySelector('[data-key="' + key + '"]'));
+    });
+    $('order').innerHTML = 'Arranged for ' + it.label + ': ' + it.order.map(function (k) {
+      return '<a href="#' + k + '">' + SECTIONS[k] + '</a>';
+    }).join(' → ');
+    if (it.steward) state.steward = it.steward;
+    renderTerms();
+  }
+  document.querySelector('.chips').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-intent]');
+    if (b) setIntent(b.dataset.intent);
+  });
+  $('cta').addEventListener('click', function () {
+    var go = INTENTS[state.intent].go;
+    if (go === '@agent') { setView('agent'); return; }
+    $(go).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
+
+  /* ---------- terms ---------- */
+  function renderTerms() {
+    var s = STEWARDS[state.steward], r = RUNS[state.runs], t = state.tenure;
+    press($('seg-steward'), state.steward);
+    press($('seg-runs'), state.runs);
+    $('tenure-terms').value = t; $('tenure-hero').value = t;
+    $('ring-n').textContent = t;
+    $('tenure-out').textContent = t + (t === 1 ? ' year' : ' years');
+    $('quote-title').textContent = s.name + ', on ' + r.name;
+    $('price').textContent = money(priceFor(t));
+    $('q-fixed').textContent = 'Fixed until ' + (2040 + t) + '. We cannot raise it.';
+    $('q-power').textContent = state.runs === 'own'
+      ? 'You supply about ' + s.kwh + ' kWh a day. That is why this is the cheapest way to run it.'
+      : state.runs === 'node'
+        ? 'Runs on a shared node within 300 metres of you, powered by the co-operative.'
+        : 'Runs on Thessaly hardware, on audited hydro and solar. Your memory stays encrypted to your keys.';
+    $('formula').textContent = 'Rule: base ' + money(s.base) + ' × ' + r.mult.toFixed(2) + ' (' + r.name + ') × ' +
+      (1 - discount(t)).toFixed(3) + ' (' + t + '-year tenure, 0.75% off per year, capped at 30%)';
+    document.querySelectorAll('.steward').forEach(function (el) {
+      var on = el.dataset.steward === state.steward;
+      el.classList.toggle('is-suggested', on);
+      el.querySelector('.steward-tag').textContent = on ? 'In your terms' : '';
+    });
+    renderManifest();
+    drawRings();
+  }
+  $('seg-steward').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) { state.steward = b.dataset.v; renderTerms(); } });
+  $('seg-runs').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) { state.runs = b.dataset.v; renderTerms(); } });
+  ['tenure-terms', 'tenure-hero'].forEach(function (id) {
+    $(id).addEventListener('input', function (e) { state.tenure = +e.target.value; renderTerms(); });
+  });
+
+  /* ---------- conversation ---------- */
+  var typing = null;
+  function ask(i) {
+    var item = QA[i];
+    document.querySelectorAll('.q').forEach(function (b, j) { b.setAttribute('aria-pressed', String(i === j)); });
+    $('receipt').textContent = 'Receipt: ' + item.r;
+    $('limits').textContent = item.l;
+    clearInterval(typing);
+    var out = $('answer-text');
+    if (reduce) { out.textContent = item.a; return; }
+    var n = 0; out.textContent = '';
+    typing = setInterval(function () {
+      n += 2; out.textContent = item.a.slice(0, n);
+      if (n >= item.a.length) clearInterval(typing);
+    }, 16);
+  }
+  QA.forEach(function (item, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'q'; b.id = 'q-' + i; b.textContent = item.q;
+    b.addEventListener('click', function () { ask(i); });
+    $('questions').appendChild(b);
+  });
+  $('answer-text').textContent = QA[0].a;
+  $('receipt').textContent = 'Receipt: ' + QA[0].r;
+  $('limits').textContent = QA[0].l;
+  $('q-0').setAttribute('aria-pressed', 'true');
+
+  /* ---------- ledger ---------- */
+  LEDGER.forEach(function (row, i) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td></td><td></td><td><span class="pill ' + (row.ok ? 'ok' : 'out') + '">' + (row.ok ? 'Holding' : 'Withdrawn') + '</span></td>' +
+      '<td><button class="sig" type="button" popovertarget="att" id="sig-' + i + '"></button></td>';
+    tr.children[0].textContent = row.c;
+    tr.children[1].textContent = row.m;
+    var btn = tr.querySelector('.sig');
+    btn.textContent = row.by;
+    btn.addEventListener('click', function () {
+      $('att-status').textContent = row.ok ? 'Claim holding' : 'Claim withdrawn';
+      $('att-claim').textContent = row.c;
+      $('att-detail').textContent = row.m + '. Signed by ' + row.by + ', ' + row.on + '.';
+      $('att-sig').textContent = fakeSig(row.c + row.by);
+    });
+    $('ledger').appendChild(tr);
+  });
+
+  /* ---------- agent manifest ---------- */
+  function renderManifest() {
+    var s = STEWARDS[state.steward], r = RUNS[state.runs], t = state.tenure;
+    var d = new Date();
+    var stamp = '2040-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    var lines = [
+      '# thessaly.steward / manifest v3 · signed ' + stamp,
+      '',
+      'entity        Thessaly Stewardship Co-operative, est. 2031',
+      'reader        arranged for ' + INTENTS[state.intent].label,
+      '',
+      'offer         ' + s.name + ' · runs on ' + r.name + ' · tenure ' + t + ' yr',
+      'price         ' + money(priceFor(t)) + ' / month · fixed until ' + (2040 + t),
+      'rule          base ' + s.base + ' x ' + r.mult.toFixed(2) + ' x ' + (1 - discount(t)).toFixed(3),
+      'negotiable    tenure, where it runs',
+      'fixed         exit terms, deletion, consent before sending',
+      '',
+      'claims        ' + LEDGER.filter(function (x) { return x.ok; }).length + ' holding · ' + LEDGER.filter(function (x) { return !x.ok; }).length + ' withdrawn'
+    ];
+    LEDGER.forEach(function (x) {
+      lines.push('  ' + (x.ok ? '[holding]   ' : '[withdrawn] ') + x.c + ' · ' + x.by);
+    });
+    lines.push('', 'exit          export OMF-2 · median 6 min · fee 0',
+      'failure       weights release to members\' co-operative',
+      'energy        0.31 Wh median per answer',
+      'negotiate     agent://thessaly.example/terms');
+    $('manifest').textContent = lines.join('\n');
+  }
+
+  /* ---------- reader bar ---------- */
+  function setView(v) {
+    page.dataset.view = v;
+    $('person').hidden = v !== 'person';
+    $('agent').hidden = v !== 'agent';
+    press($('bar-view'), v);
+    window.scrollTo(0, 0);
+    if (v === 'person') drawRings();
+  }
+  $('bar-depth').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    page.dataset.depth = b.dataset.v; press($('bar-depth'), b.dataset.v);
+  });
+  $('bar-view').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setView(b.dataset.v); });
+  $('bar-notes').addEventListener('click', function () {
+    var on = page.dataset.notes !== 'on';
+    page.dataset.notes = on ? 'on' : 'off';
+    $('bar-notes').setAttribute('aria-pressed', String(on));
+  });
+
+  /* ---------- status line + footprint ---------- */
+  var started = Date.now();
+  function tick() {
+    var d = new Date();
+    $('clock').textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    $('wh').textContent = (0.02 + (Date.now() - started) / 1000 * 0.0004).toFixed(3);
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---------- growth rings ---------- */
+  var cv = $('ringcv'), ctx = cv.getContext('2d'), colors = {}, frame = 0, size = 0;
+  function readColors() {
+    var cs = getComputedStyle(document.documentElement);
+    colors.ink = cs.getPropertyValue('--ink').trim();
+    colors.accent = cs.getPropertyValue('--accent').trim();
+    colors.sun = cs.getPropertyValue('--sun').trim();
+  }
+  function fit() {
+    var w = cv.clientWidth; if (!w) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    size = w; cv.width = Math.round(w * dpr); cv.height = Math.round(w * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function hash(i) { var x = Math.sin(i * 127.1) * 43758.5453; return x - Math.floor(x); }
+  function drawRings(time) {
+    if (!size) fit();
+    if (!size) return;
+    var t = (time || 0) / 1000, n = state.tenure, R = size * 0.47, c = size / 2;
+    ctx.clearRect(0, 0, size, size);
+    for (var i = 1; i <= n; i++) {
+      var base = R * (i / 40), amp = R * 0.03 * (0.35 + i / 40), last = i === n;
+      ctx.beginPath();
+      for (var k = 0; k <= 120; k++) {
+        var a = k / 120 * Math.PI * 2;
+        var off = Math.sin(a * 2 + i * 0.045 + t * 0.22) * 0.6 +
+                  Math.sin(a * 5 - i * 0.19 + t * 0.13) * 0.3 +
+                  Math.sin(a * 9 + i * 0.4 - t * 0.09) * 0.1;
+        var r = base + amp * off;
+        var x = c + Math.cos(a) * r + i * 0.12, y = c + Math.sin(a) * r - i * 0.08;
+        if (k === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      if (last) { ctx.strokeStyle = colors.sun; ctx.globalAlpha = 1; ctx.lineWidth = 2.6; }
+      else if (i % 10 === 0) { ctx.strokeStyle = colors.accent; ctx.globalAlpha = 0.95; ctx.lineWidth = 1.8; }
+      else { ctx.strokeStyle = colors.ink; ctx.globalAlpha = 0.3 + hash(i) * 0.45; ctx.lineWidth = 0.6 + hash(i + 50) * 1.3; }
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = colors.ink;
+    ctx.beginPath(); ctx.arc(c, c, 2.2, 0, Math.PI * 2); ctx.fill();
+  }
+  function loop(time) {
+    if (frame++ % 45 === 0) readColors();
+    if (page.dataset.view === 'person') drawRings(time);
+    requestAnimationFrame(loop);
+  }
+  readColors(); fit();
+  if (window.ResizeObserver) new ResizeObserver(function () { fit(); drawRings(); }).observe(cv);
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { readColors(); drawRings(); });
+  new MutationObserver(function () { readColors(); drawRings(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  setIntent('household');
+  if (!reduce) requestAnimationFrame(loop);
+})();
+</script>
+
+</body></html>
